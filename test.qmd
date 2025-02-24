@@ -1,0 +1,54 @@
+---
+title: "Simple Dashboard"
+format: 
+  dashboard:
+    orientation: columns
+server: shiny
+---
+  
+```{r}
+library(dplyr)
+```
+
+# Main Content
+
+## Column {width=60%}
+
+### Chart
+
+```{r}
+plotOutput("histogram")
+```
+
+### Controls
+
+```{r}
+#| content: card
+sliderInput("bins", "Number of bins:", min = 1, max = 50, value = 30)
+```
+
+## Column {width=40%}
+
+### Statistics
+
+```{r}
+#| content: card
+textOutput("stats")
+```
+
+```{r}
+#| context: server
+
+output$histogram <- renderPlot({
+  hist(faithful$waiting,
+       breaks = input$bins,
+       col = 'steelblue',
+       border = 'white',
+       main = 'Old Faithful Geyser Waiting Times')
+})
+
+output$stats <- renderText({
+  paste("Mean waiting time:", round(mean(faithful$waiting), 1),
+        "minutes\nNumber of observations:", length(faithful$waiting))
+})
+```
