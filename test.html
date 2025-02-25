@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Of Weak Intensity or Greater">
 
-<title>Simple Dashboard</title>
+<title>Recent Earthquakes in Aotearoa New Zealand</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -41,6 +42,26 @@ ul.task-list li input[type="checkbox"] {
 <script src="test_files/libs/quarto-dashboard/web-components.js" type="module"></script>
 <script src="test_files/libs/quarto-dashboard/components.js"></script>
 <link href="test_files/libs/quarto-dashboard/datatables.min.css" rel="stylesheet" kdttablesentinel="true">
+<link href="test_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="test_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<script src="test_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+
+<link href="test_files/libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+
+<script src="test_files/libs/leaflet-1.3.1/leaflet.js"></script>
+
+<link href="test_files/libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+
+<script src="test_files/libs/proj4-2.6.2/proj4.min.js"></script>
+
+<script src="test_files/libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+
+<link href="test_files/libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+
+<script src="test_files/libs/leaflet-binding-2.2.2/leaflet.js"></script>
+
 
 
 </head>
@@ -50,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="quarto-dashboard-header">
 <nav class="navbar navbar-expand-md slim" data-bs-theme="dark">
   <div class="navbar-container container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-controls="dashboard-collapse" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler hidden" type="button" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-controls="dashboard-collapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>    
 
@@ -58,130 +79,632 @@ ul.task-list li input[type="checkbox"] {
     <div class="navbar-brand-container">       
 
       <div class="navbar-title">
-        <div class="navbar-title-text"><a href="#">Simple Dashboard</a></div>
+        <div class="navbar-title-text"><a href="#">Recent Earthquakes in Aotearoa New Zealand</a></div>
         
-        
+        <div class="navbar-author">Of Weak Intensity or Greater</div>
       </div>
     </div>
-<div id="dashboard-collapse" class="navbar-collapse collapse"><ul class="navbar-nav navbar-nav-scroll me-auto" role="tablist"><li class="nav-item" role="presentation"><a id="tab-main-content" class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#main-content" data-scrolling="false" href="#main-content" aria-controls="main-content" aria-selected="true"><span class="nav-link-text">Main Content</span></a></li></ul></div></div>
+</div>
 </nav>
 </header>
-<div class="page-layout-custom quarto-dashboard-content bslib-gap-spacing html-fill-container bslib-page-fill quarto-dashboard-pages">  
+<div class="page-layout-custom quarto-dashboard-content bslib-gap-spacing html-fill-container bslib-page-fill">  
 
-<div class="bslib-grid-item html-fill-item tab-content bslib-grid" data-layout="fill" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+<div class="bslib-grid-item html-fill-item bslib-grid" data-layout="fill" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr);
 grid-auto-rows: minmax(0, 1fr);">
-<div id="main-content" class="dashboard-page tab-pane show active html-fill-item html-fill-container" data-orientation="columns" aria-labelledby="tab-main-content">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 60fr) minmax(3em, 40fr);
+<div class="bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content) minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr);
 grid-auto-rows: minmax(0, 1fr);">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr) minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
-grid-auto-rows: minmax(0, 1fr);">
-<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card valuebox cell bslib-card html-fill-container bslib-value-box bg-primary showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card()">
 <div class="card-body html-fill-item html-fill-container">
-<div class="cell-output-display html-fill-item html-fill-container">
-<div class="shiny-plot-output html-fill-item html-fill-container" id="histogram" style="width:100%;height:400px;"></div>
-</div>
-</div>
-<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
-    <template>Expand</template>
-    <span class="bslib-full-screen-enter badge rounded-pill">
-        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
-    </span>
-</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
-</div>
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
-grid-auto-rows: minmax(0, 1fr);">
-<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
-<div class="card-body html-fill-item html-fill-container">
-<div class="cell-output-display html-fill-item html-fill-container">
-<div class="form-group shiny-input-container html-fill-item html-fill-container no-baseline">
-<label class="control-label" id="bins-label" for="bins">Number of bins:</label>
-<input class="js-range-slider" id="bins" data-skin="shiny" data-min="1" data-max="50" data-from="30" data-step="1" data-grid="true" data-grid-num="9.8" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number">
-</div>
-</div>
-</div>
-<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
-    <template>Expand</template>
-    <span class="bslib-full-screen-enter badge rounded-pill">
-        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
-    </span>
-</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
-</div>
-</div><div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
-grid-auto-rows: minmax(0, 1fr);">
-<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
-<div class="card-body html-fill-item html-fill-container">
-<div class="cell-output-display html-fill-item html-fill-container">
-<div id="stats" class="shiny-text-output html-fill-item html-fill-container"></div>
-</div>
-</div>
-<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
-    <template>Expand</template>
-    <span class="bslib-full-screen-enter badge rounded-pill">
-        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
-    </span>
-</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div><div id="3ade8a4a-fb1d-4a6c-8409-ac45482d5fc9" class="hidden html-fill-item html-fill-container">
+<div data-icon="stopwatch" class="html-fill-item html-fill-container value-box-grid">
+<div class="value-box-showcase html-fill-item html-fill-container">
 
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p>
-<script type="application/shiny-prerendered" data-context="server">
-output$histogram <- renderPlot({
-  hist(faithful$waiting,
-       breaks = input$bins,
-       col = 'steelblue',
-       border = 'white',
-       main = 'Old Faithful Geyser Waiting Times')
-})
-
-output$stats <- renderText({
-  paste("Mean waiting time:", round(mean(faithful$waiting), 1),
-        "minutes\nNumber of observations:", length(faithful$waiting))
-})
-</script>
- 
-<script type="application/shiny-prerendered" data-context="server-extras">
-ojs_define <- function(..., .session = shiny::getDefaultReactiveDomain()) {
-  quos <- rlang::enquos(...)
-  vars <- rlang::list2(...)
-  nm <- names(vars)
-  if (is.null(nm)) {
-    nm <- rep_len("", length(vars))
-  }
-  mapply(function(q, nm, val) {
-    # Infer name, if possible
-    if (nm == "") {
-      tryCatch({
-        nm <- rlang::as_name(q)
-      }, error = function(e) {
-        code <- paste(collapse = "\n", deparse(rlang::f_rhs(q)))
-        stop("ojs_define() could not create a name for the argument: ", code)
-      })
-    }
-    .session$output[[nm]] <- val
-    outputOptions(.session$output, nm, suspendWhenHidden = FALSE)
-    .session$sendCustomMessage("ojs-export", list(name = nm))
-    NULL
-  }, quos, nm, vars, SIMPLIFY = FALSE, USE.NAMES = FALSE)
-  invisible()
-}
-</script>
+<i class="bi bi-stopwatch"></i></div>
+<div class="value-box-area">
+<p class="value-box-title">
+Hours since last earthquake
 </p>
-<!--html_preserve-->
-<script type="application/shiny-prerendered" data-context="dependencies">
-{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-javascript"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/ion.rangeSlider.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["strftime"]},{"type":"character","attributes":{},"value":["0.9.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/strftime"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["strftime-min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ionrangeslider-css"]},{"type":"character","attributes":{},"value":["2.3.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/ionrangeslider"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/ion.rangeSlider.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.10.0"]}]}]}
-</script>
-<!--/html_preserve-->
-<!--html_preserve-->
-<script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45]}},"value":[{"type":"character","attributes":{},"value":["base","bslib","cachem","cli","compiler","datasets","digest","dplyr","evaluate","fastmap","generics","glue","graphics","grDevices","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","lifecycle","magrittr","memoise","methods","mime","pillar","pkgconfig","promises","R6","Rcpp","rlang","rmarkdown","rstudioapi","sass","shiny","stats","tibble","tidyselect","tools","utils","vctrs","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["4.3.3","0.8.0","1.1.0","3.6.3","4.3.3","4.3.3","0.6.37","1.1.4","1.0.3","1.2.0","0.1.3","1.8.0","4.3.3","4.3.3","0.5.8.1","1.6.4","1.6.15","0.1.4","1.8.9","1.49","1.4.1","1.0.4","2.0.3","2.0.1","4.3.3","0.12","1.10.1","2.0.3","1.3.2","2.5.1","1.0.14","1.1.5","2.29","0.17.1","0.4.9","1.10.0","4.3.3","3.2.1","1.2.1","4.3.3","4.3.3","0.6.5","0.50","1.8-4","2.3.10"]}]}]}
-</script>
-<!--/html_preserve-->
+<p class="value-box-value">
+28
+</p>
+</div>
+</div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div><div class="card valuebox cell bslib-card html-fill-container bslib-value-box bg-secondary showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card()">
+<div class="card-body html-fill-item html-fill-container">
+<div data-icon="activity" class="html-fill-item html-fill-container value-box-grid">
+<div class="value-box-showcase html-fill-item html-fill-container">
+
+<i class="bi bi-activity"></i></div>
+<div class="value-box-area">
+<p class="value-box-title">
+Earthquakes in the last 24 hours
+</p>
+<p class="value-box-value">
+0
+</p>
+</div>
+</div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+<div class="bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card cell bslib-card html-fill-container" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div id="eannvhcune" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;" class="html-fill-item html-fill-container">
+<style>#eannvhcune table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#eannvhcune thead, #eannvhcune tbody, #eannvhcune tfoot, #eannvhcune tr, #eannvhcune td, #eannvhcune th {
+  border-style: none;
+}
+
+#eannvhcune p {
+  margin: 0;
+  padding: 0;
+}
+
+#eannvhcune .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#eannvhcune .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#eannvhcune .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#eannvhcune .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#eannvhcune .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#eannvhcune .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#eannvhcune .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#eannvhcune .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#eannvhcune .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#eannvhcune .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#eannvhcune .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#eannvhcune .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#eannvhcune .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#eannvhcune .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#eannvhcune .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#eannvhcune .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#eannvhcune .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#eannvhcune .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#eannvhcune .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#eannvhcune .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#eannvhcune .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#eannvhcune .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#eannvhcune .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#eannvhcune .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#eannvhcune .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#eannvhcune .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#eannvhcune .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#eannvhcune .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#eannvhcune .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#eannvhcune .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#eannvhcune .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#eannvhcune .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#eannvhcune .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#eannvhcune .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#eannvhcune .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#eannvhcune .gt_left {
+  text-align: left;
+}
+
+#eannvhcune .gt_center {
+  text-align: center;
+}
+
+#eannvhcune .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#eannvhcune .gt_font_normal {
+  font-weight: normal;
+}
+
+#eannvhcune .gt_font_bold {
+  font-weight: bold;
+}
+
+#eannvhcune .gt_font_italic {
+  font-style: italic;
+}
+
+#eannvhcune .gt_super {
+  font-size: 65%;
+}
+
+#eannvhcune .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#eannvhcune .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#eannvhcune .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#eannvhcune .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#eannvhcune .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#eannvhcune .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#eannvhcune .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#eannvhcune .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#eannvhcune div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_heading">
+<th colspan="5" class="gt_heading gt_title gt_font_normal gt_bottom_border"><strong>Last 10 Earthquakes</strong></th>
+</tr>
+<tr class="odd gt_col_headings">
+<th id="magnitude" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Magnitude</th>
+<th id="days_ago" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"></th>
+<th id="pretty_time" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"></th>
+<th id="locality" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">Location</th>
+<th id="depth" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">Depth</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_right" headers="magnitude" style="background-color: #DD513A; color: #FFFFFF">3.1</td>
+<td class="gt_row gt_left" headers="days_ago">2 days ago</td>
+<td class="gt_row gt_left" headers="pretty_time">09:51 p.&nbsp;m.</td>
+<td class="gt_row gt_left" headers="locality">10 km north-east of Taupo</td>
+<td class="gt_row gt_right" headers="depth">5 km</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="magnitude" style="background-color: #FCA50A; color: #000000">4.1</td>
+<td class="gt_row gt_left" headers="days_ago">2 days ago</td>
+<td class="gt_row gt_left" headers="pretty_time">04:26 p.&nbsp;m.</td>
+<td class="gt_row gt_left" headers="locality">40 km north-west of Te Anau</td>
+<td class="gt_row gt_right" headers="depth">102 km</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="magnitude" style="background-color: #FCA50A; color: #000000">4.3</td>
+<td class="gt_row gt_left" headers="days_ago">2 days ago</td>
+<td class="gt_row gt_left" headers="pretty_time">03:23 p.&nbsp;m.</td>
+<td class="gt_row gt_left" headers="locality">20 km north of Twizel</td>
+<td class="gt_row gt_right" headers="depth">5 km</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="magnitude" style="background-color: #FCA50A; color: #000000">4.4</td>
+<td class="gt_row gt_left" headers="days_ago">2 days ago</td>
+<td class="gt_row gt_left" headers="pretty_time">01:44 p.&nbsp;m.</td>
+<td class="gt_row gt_left" headers="locality">55 km north-west of Te Anau</td>
+<td class="gt_row gt_right" headers="depth">28 km</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="magnitude" style="background-color: #932667; color: #FFFFFF">2.1</td>
+<td class="gt_row gt_left" headers="days_ago">2 days ago</td>
+<td class="gt_row gt_left" headers="pretty_time">11:49 a.&nbsp;m.</td>
+<td class="gt_row gt_left" headers="locality">Within 5 km of Taupo</td>
+<td class="gt_row gt_right" headers="depth">4 km</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="magnitude" style="background-color: #932667; color: #FFFFFF">2.6</td>
+<td class="gt_row gt_left" headers="days_ago">2 days ago</td>
+<td class="gt_row gt_left" headers="pretty_time">05:12 a.&nbsp;m.</td>
+<td class="gt_row gt_left" headers="locality">15 km south-east of Culverden</td>
+<td class="gt_row gt_right" headers="depth">7 km</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="magnitude" style="background-color: #DD513A; color: #FFFFFF">3.0</td>
+<td class="gt_row gt_left" headers="days_ago">3 days ago</td>
+<td class="gt_row gt_left" headers="pretty_time">12:51 p.&nbsp;m.</td>
+<td class="gt_row gt_left" headers="locality">35 km north-east of Te Araroa</td>
+<td class="gt_row gt_right" headers="depth">22 km</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="magnitude" style="background-color: #932667; color: #FFFFFF">2.0</td>
+<td class="gt_row gt_left" headers="days_ago">3 days ago</td>
+<td class="gt_row gt_left" headers="pretty_time">12:16 p.&nbsp;m.</td>
+<td class="gt_row gt_left" headers="locality">Within 5 km of Turangi</td>
+<td class="gt_row gt_right" headers="depth">3 km</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_right" headers="magnitude" style="background-color: #932667; color: #FFFFFF">2.7</td>
+<td class="gt_row gt_left" headers="days_ago">3 days ago</td>
+<td class="gt_row gt_left" headers="pretty_time">08:33 a.&nbsp;m.</td>
+<td class="gt_row gt_left" headers="locality">10 km north-west of Waipukurau</td>
+<td class="gt_row gt_right" headers="depth">18 km</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_right" headers="magnitude" style="background-color: #932667; color: #FFFFFF">2.8</td>
+<td class="gt_row gt_left" headers="days_ago">3 days ago</td>
+<td class="gt_row gt_left" headers="pretty_time">03:05 a.&nbsp;m.</td>
+<td class="gt_row gt_left" headers="locality">10 km south-east of Hunterville</td>
+<td class="gt_row gt_right" headers="depth">30 km</td>
+</tr>
+</tbody><tfoot class="gt_sourcenotes">
+<tr class="even">
+<td colspan="5" class="gt_sourcenote">Retrieved from the <a href="https://api.geonet.org.nz/">GeoNet API</a> at 2025/02/26 02:17 NZDT</td>
+</tr>
+</tfoot>
+
+</table>
+
+</div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+</div><div class="bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="card cell bslib-card html-fill-container" data-title="100 Most Recent Earthquakes" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-header"><div class="card-title">100 Most Recent Earthquakes</div></div>
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div class="leaflet html-widget html-fill-item html-fill-container" id="htmlwidget-f9a563ec7537c2476155" style="width:100%;height:406px;"></div>
+<script type="application/json" data-for="htmlwidget-f9a563ec7537c2476155">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addCircleMarkers","args":[[-38.605117798,-45.082572937,-44.085906982,-45.027404785,-38.666954041,-42.918647766,-37.394039154,-39.001243591,-39.920665741,-40.035961151,-43.236686707,-40.273239136,-38.761405945,-44.105213165,-41.641181946,-38.663722992,-45.251098633,-41.515499115,-39.968906403,-37.791385651,-37.790142059,-45.370254517,-37.903678894,-38.330406189,-38.480674744,-37.760231018,-40.554859161,-38.484409332,-39.005084991,-37.084335327,-38.167140961,-41.621417999,-39.526319242,-43.60849762,-37.754642487,-39.106967926,-38.914798737,-39.827125549,-41.177265167,-37.797298431,-40.338352203,-39.6381073,-41.162017822,-44.885452271,-39.883293152,-39.639175415,-39.447788239,-40.627109528,-39.430595398,-39.436149597,-39.650230408,-43.608753204,-45.613636017,-41.783576965,-40.623493195,-41.466724396,-45.026599884,-40.903640747,-41.679786682,-39.966594696,-41.649707794,-42.271156311,-40.273487091,-40.025779724,-40.031295776,-41.396759033,-38.659919739,-39.016986847,-38.292945862,-38.662345886,-38.667255402,-38.663391113,-38.667110443,-38.662849426,-38.666713715,-38.666168213,-38.666973114,-38.664756775,-38.662700653,-38.66342926,-38.66362381,-38.668312073,-38.66500473,-38.66633606,-38.663162231,-38.663707733,-40.556610107,-41.609039307,-40.833053589,-41.344997406,-38.282207489,-40.293869019,-40.636947632,-40.909286499,-39.363609314,-37.875659148,-41.720954895,-38.65782547,-38.671585083,-42.970516205],[176.191757202,167.418792725,170.070922852,167.264053345,176.094451904,172.937896729,178.670974731,175.752288818,176.42868042,175.670135498,172.189758301,176.724319458,177.180786133,170.079452515,174.228622437,176.088134766,167.037506104,173.092437744,176.573181152,177.550415039,177.534088135,166.852630615,176.937713623,178.186965942,177.959976196,177.98135376,175.816772461,177.963104248,175.736541748,179.090362549,176.244262695,174.240371704,175.827792021,171.752456665,177.537857056,174.119537354,177.213562012,174.998596191,174.111465454,177.537887573,176.141586304,175.728912354,174.909011841,167.70602417,176.588562012,175.720870972,174.690155029,175.813308716,176.900177002,176.915557861,175.721801758,172.61164856,167.186523438,174.114395142,175.398742676,174.593566895,167.416183472,174.528106689,174.170913696,176.780136108,174.179702759,174.916946411,176.125610352,175.158630371,176.68963623,175.050811768,176.098175049,175.753097534,178.871063232,176.090942383,176.087173462,176.078353882,176.073379517,176.086273193,176.057861328,176.080871582,176.093521118,176.078475952,176.075790405,176.096359253,176.089019775,176.094650269,176.096633911,176.086395264,176.091918945,176.088470459,175.814483643,174.191421509,175.485870361,173.969833374,178.908477783,176.667480469,175.819595337,175.645339966,174.500808716,177.824139508,174.129653931,176.092132568,176.097396851,171.512115479],[4.707612858545712,7.458880192004886,7.882717747441811,8.009863299180033,1.832716219890435,3.47983353491253,4.677400711151916,1.583834556556165,3.640604722233186,3.908868836647926,3.0038109595476,2.756568474053148,6.12682167588269,4.893926969539757,3.101176188270825,1.325454612919633,6.691565450478215,6.483164769430786,4.83993195530047,4.051776607059823,5.129467902685702,6.83408729049987,2.993429725051976,3.56653542299143,3.742453842551888,5.12796321406671,3.384156004836151,3.852079621817649,2.950988662434856,7.160566947765005,1.800613470510702,3.536382668632891,3.87881087044135,2.900869768095681,4.253094700015013,3.161707265673669,4.59640834343489,7.16942931171418,4.111079146754124,4.018120408471416,4.362567734550053,4.100689254912885,2.337813521856579,5.391315131423434,4.912784775683956,4.109721369522879,4.732150108697025,7.178418689590124,1.836348734029138,4.218130343579147,2.197191729215672,2.961545131309412,7.062213683636582,8.139577828353225,3.286703030010344,5.105444093281533,8.872456996892588,4.793786833200194,3.844966896372905,4.236076491795877,2.007884654376759,9.19430515688218,5.369442185022024,4.094079314720241,2.72141894761332,4.081230574575192,1.249564068438238,1.844449258346222,5.551080802134005,3.060827200716367,2.289573862131248,2.703706829096628,3.922645189033453,1.356560707399651,1.491034957271597,1.117713983646799,1.108743900971761,2.097347875995639,2.363060809263517,1.882144354077778,1.774735494866952,3.448574283494244,1.794479244461758,3.209485826022345,1.467378556775359,1.45862614267505,3.465630252255146,3.01982574177649,4.25445518911467,4.008962735344277,6.207447132582907,3.09523480865536,10,2.724194567454789,3.308263660186043,5.298358449176126,4.156405782436292,1.573797641722292,1,2.398130709463724],null,null,{"interactive":true,"className":"","stroke":false,"color":["#DD513A","#FCA50A","#FCA50A","#FCA50A","#932667","#932667","#DD513A","#932667","#932667","#932667","#932667","#932667","#DD513A","#DD513A","#932667","#420A68","#DD513A","#DD513A","#DD513A","#932667","#DD513A","#DD513A","#932667","#932667","#932667","#DD513A","#932667","#932667","#932667","#FCA50A","#932667","#932667","#932667","#932667","#932667","#932667","#DD513A","#FCA50A","#932667","#932667","#932667","#932667","#932667","#DD513A","#DD513A","#932667","#DD513A","#FCA50A","#932667","#932667","#932667","#932667","#DD513A","#FCA50A","#932667","#DD513A","#FCA50A","#DD513A","#932667","#932667","#932667","#FCA50A","#DD513A","#932667","#932667","#932667","#420A68","#932667","#DD513A","#932667","#932667","#932667","#932667","#420A68","#420A68","#420A68","#420A68","#932667","#932667","#932667","#932667","#932667","#932667","#932667","#420A68","#420A68","#932667","#932667","#932667","#932667","#DD513A","#932667","#FCFFA4","#932667","#932667","#DD513A","#932667","#932667","#420A68","#932667"],"weight":5,"opacity":0.5,"fill":true,"fillColor":["#DD513A","#FCA50A","#FCA50A","#FCA50A","#932667","#932667","#DD513A","#932667","#932667","#932667","#932667","#932667","#DD513A","#DD513A","#932667","#420A68","#DD513A","#DD513A","#DD513A","#932667","#DD513A","#DD513A","#932667","#932667","#932667","#DD513A","#932667","#932667","#932667","#FCA50A","#932667","#932667","#932667","#932667","#932667","#932667","#DD513A","#FCA50A","#932667","#932667","#932667","#932667","#932667","#DD513A","#DD513A","#932667","#DD513A","#FCA50A","#932667","#932667","#932667","#932667","#DD513A","#FCA50A","#932667","#DD513A","#FCA50A","#DD513A","#932667","#932667","#932667","#FCA50A","#DD513A","#932667","#932667","#932667","#420A68","#932667","#DD513A","#932667","#932667","#932667","#932667","#420A68","#420A68","#420A68","#420A68","#932667","#932667","#932667","#932667","#932667","#932667","#932667","#420A68","#420A68","#932667","#932667","#932667","#932667","#DD513A","#932667","#FCFFA4","#932667","#932667","#DD513A","#932667","#932667","#420A68","#932667"],"fillOpacity":0.5},null,null,null,null,["2025-02-24 09:51 p. m. <br/> Magnitude: 3.1 <br/> Depth: 5  km","2025-02-24 04:26 p. m. <br/> Magnitude: 4.1 <br/> Depth: 102  km","2025-02-24 03:23 p. m. <br/> Magnitude: 4.3 <br/> Depth: 5  km","2025-02-24 01:44 p. m. <br/> Magnitude: 4.4 <br/> Depth: 28  km","2025-02-24 11:49 a. m. <br/> Magnitude: 2.1 <br/> Depth: 4  km","2025-02-24 05:12 a. m. <br/> Magnitude: 2.6 <br/> Depth: 7  km","2025-02-23 12:51 p. m. <br/> Magnitude: 3 <br/> Depth: 22  km","2025-02-23 12:16 p. m. <br/> Magnitude: 2 <br/> Depth: 3  km","2025-02-23 08:33 a. m. <br/> Magnitude: 2.7 <br/> Depth: 18  km","2025-02-23 03:05 a. m. <br/> Magnitude: 2.8 <br/> Depth: 30  km","2025-02-21 01:57 p. m. <br/> Magnitude: 2.5 <br/> Depth: 6  km","2025-02-21 12:49 p. m. <br/> Magnitude: 2.4 <br/> Depth: 13  km","2025-02-21 07:38 a. m. <br/> Magnitude: 3.6 <br/> Depth: 33  km","2025-02-21 06:07 a. m. <br/> Magnitude: 3.1 <br/> Depth: 5  km","2025-02-20 06:34 p. m. <br/> Magnitude: 2.5 <br/> Depth: 8  km","2025-02-20 07:19 a. m. <br/> Magnitude: 1.9 <br/> Depth: 5  km","2025-02-20 05:27 a. m. <br/> Magnitude: 3.8 <br/> Depth: 23  km","2025-02-20 12:04 a. m. <br/> Magnitude: 3.7 <br/> Depth: 63  km","2025-02-19 03:46 p. m. <br/> Magnitude: 3.1 <br/> Depth: 18  km","2025-02-19 02:44 p. m. <br/> Magnitude: 2.8 <br/> Depth: 30  km","2025-02-19 02:41 p. m. <br/> Magnitude: 3.2 <br/> Depth: 26  km","2025-02-18 11:40 p. m. <br/> Magnitude: 3.9 <br/> Depth: 10  km","2025-02-18 05:43 p. m. <br/> Magnitude: 2.5 <br/> Depth: 5  km","2025-02-18 07:26 a. m. <br/> Magnitude: 2.7 <br/> Depth: 15  km","2025-02-18 12:10 a. m. <br/> Magnitude: 2.7 <br/> Depth: 19  km","2025-02-17 09:27 p. m. <br/> Magnitude: 3.2 <br/> Depth: 51  km","2025-02-17 07:27 p. m. <br/> Magnitude: 2.6 <br/> Depth: 23  km","2025-02-17 04:27 p. m. <br/> Magnitude: 2.8 <br/> Depth: 20  km","2025-02-17 07:15 a. m. <br/> Magnitude: 2.4 <br/> Depth: 5  km","2025-02-17 05:53 a. m. <br/> Magnitude: 4 <br/> Depth: 12  km","2025-02-17 04:41 a. m. <br/> Magnitude: 2.1 <br/> Depth: 5  km","2025-02-15 11:42 p. m. <br/> Magnitude: 2.6 <br/> Depth: 8  km","2025-02-15 10:11 p. m. <br/> Magnitude: 2.8 <br/> Depth: 12  km","2025-02-15 06:53 p. m. <br/> Magnitude: 2.4 <br/> Depth: 5  km","2025-02-15 03:33 p. m. <br/> Magnitude: 2.9 <br/> Depth: 29  km","2025-02-15 02:14 p. m. <br/> Magnitude: 2.5 <br/> Depth: 13  km","2025-02-14 06:26 p. m. <br/> Magnitude: 3 <br/> Depth: 28  km","2025-02-14 02:07 p. m. <br/> Magnitude: 4 <br/> Depth: 67  km","2025-02-13 03:51 a. m. <br/> Magnitude: 2.8 <br/> Depth: 32  km","2025-02-12 07:57 a. m. <br/> Magnitude: 2.8 <br/> Depth: 29  km","2025-02-12 04:07 a. m. <br/> Magnitude: 2.9 <br/> Depth: 39  km","2025-02-11 08:08 p. m. <br/> Magnitude: 2.8 <br/> Depth: 15  km","2025-02-11 06:22 p. m. <br/> Magnitude: 2.3 <br/> Depth: 18  km","2025-02-11 03:58 p. m. <br/> Magnitude: 3.3 <br/> Depth: 57  km","2025-02-10 11:24 p. m. <br/> Magnitude: 3.1 <br/> Depth: 38  km","2025-02-10 02:32 p. m. <br/> Magnitude: 2.8 <br/> Depth: 15  km","2025-02-10 11:55 a. m. <br/> Magnitude: 3.1 <br/> Depth: 21  km","2025-02-10 08:17 a. m. <br/> Magnitude: 4 <br/> Depth: 33  km","2025-02-09 10:00 p. m. <br/> Magnitude: 2.1 <br/> Depth: 10  km","2025-02-09 09:52 p. m. <br/> Magnitude: 2.9 <br/> Depth: 11  km","2025-02-08 03:08 p. m. <br/> Magnitude: 2.2 <br/> Depth: 16  km","2025-02-08 12:00 a. m. <br/> Magnitude: 2.5 <br/> Depth: 4  km","2025-02-07 11:47 a. m. <br/> Magnitude: 4 <br/> Depth: 32  km","2025-02-07 12:33 a. m. <br/> Magnitude: 4.4 <br/> Depth: 15  km","2025-02-07 12:22 a. m. <br/> Magnitude: 2.6 <br/> Depth: 24  km","2025-02-05 05:22 p. m. <br/> Magnitude: 3.2 <br/> Depth: 18  km","2025-02-05 11:20 a. m. <br/> Magnitude: 4.8 <br/> Depth: 36  km","2025-02-04 08:11 a. m. <br/> Magnitude: 3.1 <br/> Depth: 26  km","2025-02-04 03:13 a. m. <br/> Magnitude: 2.8 <br/> Depth: 12  km","2025-02-04 01:31 a. m. <br/> Magnitude: 2.9 <br/> Depth: 17  km","2025-02-02 09:00 a. m. <br/> Magnitude: 2.1 <br/> Depth: 10  km","2025-02-01 06:26 a. m. <br/> Magnitude: 4.9 <br/> Depth: 33  km","2025-01-31 07:23 p. m. <br/> Magnitude: 3.3 <br/> Depth: 40  km","2025-01-31 03:38 p. m. <br/> Magnitude: 2.8 <br/> Depth: 15  km","2025-01-31 03:29 a. m. <br/> Magnitude: 2.4 <br/> Depth: 16  km","2025-01-31 02:41 a. m. <br/> Magnitude: 2.8 <br/> Depth: 20  km","2025-01-31 01:46 a. m. <br/> Magnitude: 1.9 <br/> Depth: 7  km","2025-01-30 02:58 p. m. <br/> Magnitude: 2.1 <br/> Depth: 6  km","2025-01-30 01:39 p. m. <br/> Magnitude: 3.4 <br/> Depth: 29  km","2025-01-30 11:00 a. m. <br/> Magnitude: 2.5 <br/> Depth: 5  km","2025-01-30 07:19 a. m. <br/> Magnitude: 2.2 <br/> Depth: 4  km","2025-01-30 07:02 a. m. <br/> Magnitude: 2.4 <br/> Depth: 4  km","2025-01-30 06:51 a. m. <br/> Magnitude: 2.8 <br/> Depth: 4  km","2025-01-30 06:07 a. m. <br/> Magnitude: 2 <br/> Depth: 5  km","2025-01-30 06:05 a. m. <br/> Magnitude: 2 <br/> Depth: 5  km","2025-01-30 06:01 a. m. <br/> Magnitude: 1.9 <br/> Depth: 4  km","2025-01-30 05:25 a. m. <br/> Magnitude: 1.9 <br/> Depth: 5  km","2025-01-30 04:53 a. m. <br/> Magnitude: 2.2 <br/> Depth: 4  km","2025-01-30 03:53 a. m. <br/> Magnitude: 2.3 <br/> Depth: 4  km","2025-01-30 03:47 a. m. <br/> Magnitude: 2.1 <br/> Depth: 6  km","2025-01-30 03:36 a. m. <br/> Magnitude: 2.1 <br/> Depth: 3  km","2025-01-30 02:42 a. m. <br/> Magnitude: 2.6 <br/> Depth: 5  km","2025-01-30 02:32 a. m. <br/> Magnitude: 2.1 <br/> Depth: 10  km","2025-01-30 02:15 a. m. <br/> Magnitude: 2.5 <br/> Depth: 4  km","2025-01-30 02:05 a. m. <br/> Magnitude: 2 <br/> Depth: 6  km","2025-01-30 01:58 a. m. <br/> Magnitude: 2 <br/> Depth: 5  km","2025-01-29 10:50 p. m. <br/> Magnitude: 2.6 <br/> Depth: 22  km","2025-01-29 11:04 a. m. <br/> Magnitude: 2.5 <br/> Depth: 21  km","2025-01-29 02:25 a. m. <br/> Magnitude: 2.9 <br/> Depth: 18  km","2025-01-28 11:05 p. m. <br/> Magnitude: 2.8 <br/> Depth: 33  km","2025-01-28 09:43 p. m. <br/> Magnitude: 3.6 <br/> Depth: 27  km","2025-01-28 05:48 p. m. <br/> Magnitude: 2.5 <br/> Depth: 15  km","2025-01-28 07:26 a. m. <br/> Magnitude: 5.3 <br/> Depth: 35  km","2025-01-28 06:38 a. m. <br/> Magnitude: 2.4 <br/> Depth: 6  km","2025-01-28 05:56 a. m. <br/> Magnitude: 2.6 <br/> Depth: 10  km","2025-01-28 03:57 a. m. <br/> Magnitude: 3.3 <br/> Depth: 6  km","2025-01-28 12:22 a. m. <br/> Magnitude: 2.9 <br/> Depth: 11  km","2025-01-27 03:12 p. m. <br/> Magnitude: 2 <br/> Depth: 5  km","2025-01-27 02:57 p. m. <br/> Magnitude: 1.9 <br/> Depth: 7  km","2025-01-27 09:50 a. m. <br/> Magnitude: 2.3 <br/> Depth: 3  km"],{"textsize":"15px"},null]},{"method":"addLegend","args":[{"colors":["#000004","#420A68","#932667","#DD513A","#FCA50A","#FCFFA4"],"labels":["<1","1","2","3","4",">5"],"na_color":null,"na_label":"NA","opacity":0.5,"position":"topright","type":"unknown","title":"Magnitude","extra":null,"layerId":null,"className":"info legend","group":null}]},{"method":"addTiles","args":["http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",null,null,{"minZoom":5,"maxZoom":10,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false}]}],"limits":{"lat":[-45.613636017,-37.084335327],"lng":[166.852630615,179.090362549]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+<div id="3ade8a4a-fb1d-4a6c-8409-ac45482d5fc9" class="hidden">
+
+</div>
+</div>
+</div>
 
 
 <script id="quarto-html-after-body" type="application/javascript">
